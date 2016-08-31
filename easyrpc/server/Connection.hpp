@@ -24,6 +24,12 @@ public:
     Connection(boost::asio::io_service& ios, std::size_t timeoutMilli = 0)
         : m_socket(ios), m_timer(ios), m_timeoutMilli(timeoutMilli) {}
 
+    ~Connection()
+    {
+        stopTimer();
+        disconnect();
+    }
+
     void start()
     {
         setNoDelay();

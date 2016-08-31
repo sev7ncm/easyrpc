@@ -180,7 +180,7 @@ private:
             }
             catch (std::exception& e)
             {
-                std::cout << "Exception: " << e.what() << std::endl;
+                logWarn(e.what());
             }
         }
 
@@ -194,7 +194,7 @@ private:
             }
             catch (std::exception& e)
             {
-                std::cout << "Exception: " << e.what() << std::endl;
+                logWarn(e.what());
             }
         }
     }; 
@@ -213,7 +213,7 @@ private:
             }
             catch (std::exception& e)
             {
-                std::cout << "Exception: " << e.what() << std::endl;
+                logWarn(e.what());
             }
         }
 
@@ -226,7 +226,7 @@ private:
             }  
             catch (std::exception& e)
             {
-                std::cout << "Exception: " << e.what() << std::endl;
+                logWarn(e.what());
             }
         }
     };
