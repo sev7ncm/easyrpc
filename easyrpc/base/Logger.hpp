@@ -1,7 +1,7 @@
 #ifndef _LOGGER_H
 #define _LOGGER_H
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 
 static const std::string LoggerName = "easyrpc";
 static const std::size_t MaxFileSize = 3 * 1024 * 1024;
