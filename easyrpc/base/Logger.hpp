@@ -38,7 +38,7 @@ private:
     {
         try
         {
-            m_consoleLogger = spdlog::stdout_logger_mt("console", true);
+            m_consoleLogger = spdlog::stdout_logger_mt("console", false);
             m_fileLogger = spdlog::rotating_logger_mt("file", LoggerName, MaxFileSize, MaxFiles, true);
             m_consoleLogger->set_level(spdlog::level::debug); 
             m_fileLogger->set_level(spdlog::level::debug); 
