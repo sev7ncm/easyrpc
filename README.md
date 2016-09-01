@@ -43,7 +43,7 @@ A RPC framework written in Modern C++
     }
     ```
     
-    服务器调用bind函数绑定handler，支持成员函数、非成员函数以及lambda表达式的绑定，设置3000ms读socket超时，启用10个Worker线程处理业务，内部IO线程使用`an io_service-per-CPU`（一个ioservice对应一个线程）模式，最大限度提升IO性能。
+    服务器调用bind函数绑定handler，支持成员函数、非成员函数以及lambda表达式的绑定，设置3000ms读socket超时（默认为永不超时），启用10个Worker线程处理业务（默认为单线程），内部IO线程使用`an io_service-per-CPU`（一个ioservice对应一个线程）模式，最大限度提升IO性能。
     
 * **客户端代码**
     ```cpp
@@ -67,6 +67,13 @@ A RPC framework written in Modern C++
     ```
     
 正如你所看到的，客户端像调用本地函数一样就能够完成与服务端的通信，一切都那么简洁方便，easyrpc目前只支持短连接调用，短连接的好处就是不用担心各个server的启动顺序、调用方便以及不用维护心跳，由于每次call都会去connect，所以没有长连接高效，后期可能会考虑增加长连接call，easyrpc使用boost.asio来作为网络底层，效率自然高效，boost.serialization作为序列化框架，可以用类对象、STL（vector、map等）作为函数参数。
+
+## 使用
+
+    git clone https://github.com/chxuan/easyrpc.git
+    git submodule update --init --recursive
+
+下载过后包含easyrpc头文件即可。
 
 ## 开发平台
 
