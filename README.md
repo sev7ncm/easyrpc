@@ -43,7 +43,7 @@ A RPC framework written in Modern C++
     }
     ```
     
-    服务器调用bind函数绑定handler，支持成员函数、非成员函数以及lambda表达式的绑定，设置3000ms读socket超时，启用10个Worker线程处理业务，内部IO线程使用`an io_service-per-CPU`（一个ioservice对应一个线程）模式，最大限度提升IO性能。
+    服务器调用bind函数绑定handler，支持成员函数、非成员函数以及lambda表达式的绑定，设置3000ms读socket超时（默认为永不超时），启用10个Worker线程处理业务（默认为单线程），内部IO线程使用`an io_service-per-CPU`（一个ioservice对应一个线程）模式，最大限度提升IO性能。
     
 * **客户端代码**
     ```cpp
