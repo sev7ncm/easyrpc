@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "gtest/gtest.h"
-#include "easyrpc/EasyRpc.hpp"
+#include <gtest/gtest.h>
+#include <easyrpc/EasyRpc.hpp>
 #include "ProtocolDefine.hpp"
 
 std::vector<PersonInfoRes> queryPersonInfo(const PersonInfoReq& req)
@@ -13,7 +13,6 @@ std::vector<PersonInfoRes> queryPersonInfo(const PersonInfoReq& req)
     for (int i = 0; i < 2; ++i)
     {
         PersonInfoRes res;
-        res.error = 0;
         res.cardId = req.cardId;
         res.name = req.name;
         res.age = 20;

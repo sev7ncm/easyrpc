@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
-#include "gtest/gtest.h"
-#include "easyrpc/EasyRpc.hpp"
+#include <gtest/gtest.h>
+#include <easyrpc/EasyRpc.hpp>
 #include "ProtocolDefine.hpp"
 
 EASYRPC_RPC_PROTOCOL_DEFINE(sayHello, void());
@@ -25,7 +25,6 @@ TEST(EasyRpcTest, ClientCase)
         EXPECT_EQ(2, static_cast<int>(vec.size()));
         for (auto& res : vec)
         {
-            EXPECT_EQ(0, res.error);
             EXPECT_EQ(req.cardId, res.cardId);
             EXPECT_STREQ(req.name.c_str(), res.name.c_str());
             EXPECT_EQ(20, res.age);

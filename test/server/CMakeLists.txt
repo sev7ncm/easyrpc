@@ -4,6 +4,9 @@ project(server)
 set(OUTPUTNAME server)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-deprecated -Wno-unused-variable -g -O2 -std=c++14")
 
+#add_definitions(-DENABLE_BOOST_SERIALIZATION)
+add_definitions(-DENABLE_MSGPACK)
+
 aux_source_directory(. DIR_SRCS)
 
 include_directories(${PROJECT_SOURCE_DIR})
@@ -11,6 +14,7 @@ include_directories(${PROJECT_SOURCE_DIR}/../..)
 include_directories(${PROJECT_SOURCE_DIR}/../protocol)
 include_directories(${PROJECT_SOURCE_DIR}/../../easyrpc)
 include_directories(${PROJECT_SOURCE_DIR}/../../easypack)
+include_directories(${PROJECT_SOURCE_DIR}/../../easypack/msgpack)
 include_directories(${PROJECT_SOURCE_DIR}/../../spdlog/include)
 include_directories(${PROJECT_SOURCE_DIR}/../googletest/googletest/include)
 include_directories($ENV{BOOST_INCLUDE_PATH})

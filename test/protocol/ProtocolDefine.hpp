@@ -1,6 +1,7 @@
 #ifndef _PROTOCOLDEFINE_H
 #define _PROTOCOLDEFINE_H
 
+#ifdef ENABLE_BOOST_SERIALIZATION
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/base_object.hpp>
@@ -23,46 +24,52 @@
 #include <boost/serialization/boost_unordered_set.hpp>
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/split_member.hpp>
+#endif
 
-struct Error
-{
-    int error = 0;
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int)
-    {
-        ar & error;
-    }
-};
+#ifdef ENABLE_MSGPACK
+#include <msgpack.hpp>
+#endif
 
 struct PersonInfoReq
 {
     int cardId = 0;
     std::string name;
 
+#ifdef ENABLE_BOOST_SERIALIZATION
     template<class Archive>
     void serialize(Archive& ar, const unsigned int)
     {
         ar & cardId;
         ar & name;
     }
+#endif
+
+#ifdef ENABLE_MSGPACK
+    MSGPACK_DEFINE(cardId, name);
+#endif
 };
 
-struct PersonInfoRes : public Error
+struct PersonInfoRes 
 {
     int cardId = 0;
     std::string name;
     int age = 0;
     std::string national;
 
+#ifdef ENABLE_BOOST_SERIALIZATION
     template<class Archive>
     void serialize(Archive& ar, const unsigned int)
     {
-        ar & boost::serialization::base_object<Error>(*this);
         ar & cardId;
         ar & name;
         ar & age;
         ar & national;
     }
+#endif
+    
+#ifdef ENABLE_MSGPACK
+    MSGPACK_DEFINE(cardId, name, age, national);
+#endif
 };
 
 #endif
