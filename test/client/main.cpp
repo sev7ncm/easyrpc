@@ -2,7 +2,7 @@
 #include <thread>
 #include <gtest/gtest.h>
 #include <easyrpc/EasyRpc.hpp>
-#include "ProtocolDefine.hpp"
+#include "UserDefineClasses.hpp"
 
 EASYRPC_RPC_PROTOCOL_DEFINE(sayHello, void());
 EASYRPC_RPC_PROTOCOL_DEFINE(echo, std::string(const std::string&));

@@ -3,7 +3,7 @@
 #include <thread>
 #include <gtest/gtest.h>
 #include <easyrpc/EasyRpc.hpp>
-#include "ProtocolDefine.hpp"
+#include "UserDefineClasses.hpp"
 
 std::vector<PersonInfoRes> queryPersonInfo(const PersonInfoReq& req)
 {
