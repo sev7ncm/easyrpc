@@ -46,7 +46,7 @@ public:
         unsigned int bodyLen = static_cast<unsigned int>(body.size());
         if (bodyLen > MaxBufferLenght)
         {
-            throw std::runtime_error("Send data too large");
+            throw std::runtime_error("Send data is too big");
         }
 
         const auto& buffer = getBuffer(ResponseHeader{ bodyLen }, body);

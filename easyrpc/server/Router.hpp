@@ -29,10 +29,7 @@ public:
             TokenParser parser(body);
             std::string result;
             m_func(parser, result);
-            if (!result.empty())
-            {
-                conn->write(result);
-            }
+            conn->write(result);
         }
         catch (std::exception& e)
         {

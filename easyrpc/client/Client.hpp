@@ -174,9 +174,9 @@ private:
     void checkHead()
     {
         memcpy(&m_resHead, m_head, sizeof(m_head));
-        if (m_resHead.bodyLen <= 0 || m_resHead.bodyLen > MaxBufferLenght)
+        if (m_resHead.bodyLen > MaxBufferLenght)
         {
-            throw std::runtime_error("Invaild bodylen");
+            throw std::runtime_error("Body len is to big");
         }
     }
 
