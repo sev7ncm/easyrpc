@@ -83,7 +83,7 @@ A RPC framework written in Modern C++
     ```cpp
     struct PersonInfoReq
     {
-        int cardId = 0;
+        int cardId;
         std::string name;
     
     #ifdef ENABLE_BOOST_SERIALIZATION
@@ -102,9 +102,9 @@ A RPC framework written in Modern C++
     
     struct PersonInfoRes 
     {
-        int cardId = 0;
+        int cardId;
         std::string name;
-        int age = 0;
+        int age;
         std::string national;
         
     #ifdef ENABLE_BOOST_SERIALIZATION
