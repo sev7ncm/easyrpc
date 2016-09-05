@@ -21,7 +21,6 @@ A RPC framework written in Modern C++
 * **Simple server**
 
     ```cpp
-    // server.cpp
     #include <easyrpc/EasyRpc.hpp>
     
     std::string echo(const std::string& str)
@@ -60,7 +59,6 @@ A RPC framework written in Modern C++
     
 * **Simple client**
     ```cpp
-    // client.cpp
     #include <easyrpc/EasyRpc.hpp>
     
     EASYRPC_RPC_PROTOCOL_DEFINE(sayHello, void());
@@ -81,6 +79,53 @@ A RPC framework written in Modern C++
     
 正如你所看到的，客户端像调用本地函数一样就能够完成与服务端的通信，一切都那么简洁方便，easyrpc目前只支持短连接调用，短连接的好处就是不用担心各个server的启动顺序、调用方便以及不用维护心跳，由于每次call都会去connect，所以没有长连接高效，后期可能会考虑增加长连接call，easyrpc使用boost.asio来作为网络底层，效率自然高效，boost.serialization作为序列化框架，可以用类对象、STL（vector、map等）作为函数参数。
 
+* **User-define classes**
+    ```cpp
+    struct PersonInfoReq
+    {
+        int cardId = 0;
+        std::string name;
+    
+    #ifdef ENABLE_BOOST_SERIALIZATION
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int)
+        {
+            ar & cardId;
+            ar & name;
+        }
+    #endif
+    
+    #ifdef ENABLE_MSGPACK
+        MSGPACK_DEFINE(cardId, name);
+    #endif
+    };
+    
+    struct PersonInfoRes 
+    {
+        int cardId = 0;
+        std::string name;
+        int age = 0;
+        std::string national;
+        
+    #ifdef ENABLE_BOOST_SERIALIZATION
+        template<class Archive>
+        void serialize(Archive& ar, const unsigned int)
+        {
+            ar & cardId;
+            ar & name;
+            ar & age;
+            ar & national;
+        }
+    #endif
+        
+    #ifdef ENABLE_MSGPACK
+        MSGPACK_DEFINE(cardId, name, age, national);
+    #endif
+    };
+    ```
+    
+可以看到，[boost序列化][3]和[msgpack][4]不需要写IDL描述文件，比[protobuf][5]和[thrift][6]方便很多，更多User-define classes细节可以查看各自官网。
+
 ## 开发平台
 
 * Ubuntu16.04 LTS gcc5.3.1
@@ -88,8 +133,8 @@ A RPC framework written in Modern C++
 
 ## 依赖性
 
-* [easypack][3]
-* [spdlog][4]
+* [easypack][7]
+* [spdlog][8]
 * boost
 * c++14
 
@@ -106,11 +151,15 @@ A RPC framework written in Modern C++
 
 
 ## License
-This software is licensed under the [MIT license][5]. © 2016 chxuan
+This software is licensed under the [MIT license][9]. © 2016 chxuan
 
 
   [1]: https://github.com/topcpporg/rest_rpc
   [2]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
-  [3]: https://github.com/chxuan/easypack
-  [4]: https://github.com/gabime/spdlog
-  [5]: https://github.com/chxuan/easyrpc/blob/master/LICENSE
+  [3]: http://www.boost.org/
+  [4]: https://github.com/msgpack/msgpack-c
+  [5]: https://github.com/google/protobuf
+  [6]: https://github.com/apache/thrift
+  [7]: https://github.com/chxuan/easypack
+  [8]: https://github.com/gabime/spdlog
+  [9]: https://github.com/chxuan/easyrpc/blob/master/LICENSE
