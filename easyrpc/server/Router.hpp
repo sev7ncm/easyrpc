@@ -105,6 +105,8 @@ public:
     template<typename T>
     void route(const std::string& protocol, const std::string& body, T conn)
     {
+        std::cout << "protocol: " << protocol << std::endl;
+        std::cout << "body: " << body << std::endl;
         auto iter = m_invokerMap.find(protocol);
         if (iter == m_invokerMap.end())
         {
