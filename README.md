@@ -146,7 +146,7 @@ A RPC framework written in Modern C++
 
 * 增加长连接调用。
 * 增加发布/订阅模式。
-* 增加其他序列化框架和协议（json、msgpack等）。
+* 增加其他序列化框架和协议（json、~~msgpack~~等）。
 * 服务注册、发现。
 
 
