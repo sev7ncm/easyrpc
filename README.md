@@ -142,6 +142,15 @@ A RPC framework written in Modern C++
 
 * 使用boost序列化库时，客户端和服务端序列化库的版本务必统一，要么使用32位的，要么使用64位，不然不能够通信，因为boost.serialization使用std::size_t来存储字节长度，std::size_t在32位下为unsigned int，在64位下为unsigned long。
 
+## DONE
+
+* 短连接调用。
+* TCP协议。
+* worker线程池处理任务。
+* 日志记录。
+* 客户端、服务端超时处理。
+* 支持多种序列化框架（boost序列化和msgpack）。
+
 ## TODO
 
 * 增加长连接调用。
