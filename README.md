@@ -83,7 +83,7 @@ A RPC framework written in Modern C++
     ```cpp
     struct PersonInfoReq
     {
-        int cardId = 0;
+        int cardId;
         std::string name;
     
     #ifdef ENABLE_BOOST_SERIALIZATION
@@ -102,9 +102,9 @@ A RPC framework written in Modern C++
     
     struct PersonInfoRes 
     {
-        int cardId = 0;
+        int cardId;
         std::string name;
-        int age = 0;
+        int age;
         std::string national;
         
     #ifdef ENABLE_BOOST_SERIALIZATION
@@ -140,14 +140,24 @@ A RPC framework written in Modern C++
 
 ## Warning
 
-* 客户端和服务端使用的boost.serialization务必统一，要么使用32位的，要么使用64位，不然不能够通信，因为boost.serialization使用std::size_t来存储字节长度，std::size_t在32位下为unsigned int，在64位下为unsigned long。
+* 使用boost序列化库时，客户端和服务端序列化库的版本务必统一，要么使用32位的，要么使用64位，不然不能够通信，因为boost.serialization使用std::size_t来存储字节长度，std::size_t在32位下为unsigned int，在64位下为unsigned long。
+
+## DONE
+
+* 短连接调用。
+* TCP协议。
+* worker线程池处理任务。
+* 日志记录。
+* 客户端、服务端超时处理。
+* 支持多种序列化框架（boost序列化和msgpack）。
 
 ## TODO
 
 * 增加长连接调用。
 * 增加发布/订阅模式。
-* 增加其他序列化框架和协议（json、msgpack等）。
+* 增加其他序列化框架和协议（json、~~msgpack~~等）。
 * 服务注册、发现。
+* 支持HTTP/HTTPS协议。
 
 
 ## License
