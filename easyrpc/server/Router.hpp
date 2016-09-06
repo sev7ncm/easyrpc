@@ -103,15 +103,16 @@ public:
     }
 
     template<typename T>
-    void route(const std::string& protocol, const std::string& body, T conn)
+    bool route(const std::string& protocol, const std::string& body, T conn)
     {
         auto iter = m_invokerMap.find(protocol);
         if (iter == m_invokerMap.end())
         {
-            return;
+            return false;
         }
 
         m_threadPool.addTask(iter->second, body, conn);
+        return true;
     }
 
 private:

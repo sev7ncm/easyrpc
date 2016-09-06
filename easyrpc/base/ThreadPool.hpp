@@ -11,6 +11,9 @@
 #include <atomic>
 #include <type_traits>
 
+namespace easyrpc
+{
+
 static const std::size_t MaxTaskQueueSize = 100000;
 static const std::size_t MaxNumOfThread = 30;
 
@@ -163,5 +166,7 @@ private:
     std::atomic<bool> m_isStopThreadPool;
     std::once_flag m_callFlag;
 };
+
+}
 
 #endif

@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+namespace easyrpc
+{
+
 template<typename T>
 class ScopeGuard
 {
@@ -42,6 +45,8 @@ template<typename T>
 ScopeGuard<typename std::decay<T>::type> makeGuard(T&& func)
 {
     return ScopeGuard<typename std::decay<T>::type>(std::forward<T>(func));
+}
+
 }
 
 #endif

@@ -7,6 +7,9 @@
 #include <string>
 #include <vector>
 
+namespace easyrpc
+{
+
 class StringUtil
 {
 public:
@@ -87,5 +90,7 @@ public:
         return str.find(token) == std::string::npos ? false : true;
     }
 };
+
+}
 
 #endif

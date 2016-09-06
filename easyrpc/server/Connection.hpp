@@ -114,15 +114,21 @@ private:
                 return;
             }
 
+            auto guard = makeGuard([this, self]{ disconnect(); });
             if (ec)
             {
                 logWarn(ec.message());
-                disconnect();
                 return;
             }
 
-            Router::instance().route(std::string(&m_protocolAndBody[0], m_reqHead.protocolLen), 
-                                     std::string(&m_protocolAndBody[m_reqHead.protocolLen], m_reqHead.bodyLen), self);
+            bool ok = Router::instance().route(std::string(&m_protocolAndBody[0], m_reqHead.protocolLen), 
+                                               std::string(&m_protocolAndBody[m_reqHead.protocolLen], m_reqHead.bodyLen), self);
+            if (!ok)
+            {
+                logWarn("Router failed");
+                return;
+            }
+            guard.dismiss();
         });
     }
 

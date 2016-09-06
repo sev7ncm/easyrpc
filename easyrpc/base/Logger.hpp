@@ -3,6 +3,9 @@
 
 #include <spdlog/spdlog.h>
 
+namespace easyrpc
+{
+
 static const std::string LoggerName = "easyrpc";
 static const std::size_t MaxFileSize = 3 * 1024 * 1024;
 static const std::size_t MaxFiles = 30;
@@ -101,5 +104,7 @@ private:
 #define logWarn        Logger(LOCATION, spdlog::level::level_enum::warn).log
 #define logError       Logger(LOCATION, spdlog::level::level_enum::err).log
 #define logCritical    Logger(LOCATION, spdlog::level::level_enum::critical).log
+
+}
 
 #endif

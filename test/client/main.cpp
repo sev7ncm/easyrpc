@@ -33,7 +33,7 @@ TEST(EasyRpcTest, ClientCase)
     }
     catch (std::exception& e)
     {
-        logWarn(e.what());
+        easyrpc::logWarn(e.what());
         FAIL();
     }
 }

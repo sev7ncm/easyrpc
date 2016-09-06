@@ -7,6 +7,9 @@
 #include <boost/timer.hpp>
 #include <boost/asio.hpp>
 
+namespace easyrpc
+{
+
 template<typename Duration = boost::posix_time::milliseconds>
 class ATimer
 {
@@ -61,5 +64,7 @@ private:
     std::vector<std::function<void()>> m_funcVec;
     std::atomic<bool> m_isSingleShot;
 };
+
+}
 
 #endif
