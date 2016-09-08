@@ -2,6 +2,7 @@
 #define _LOGGER_H
 
 #include <spdlog/spdlog.h>
+#include "FileUtil.hpp"
 
 namespace easyrpc
 {
@@ -39,10 +40,42 @@ public:
 private:
     bool init()
     {
+        std::string logFileName = createLogFile();
+        if (logFileName.empty())
+        {
+            return false;
+        }
+        return initLogCore(logFileName);
+    }
+
+    std::string createLogFile()
+    {
+        std::string exePath = FileUtil::currentExePath();
+        if (exePath.empty())
+        {
+            return "";
+        }
+
+        std::string logPath = exePath + "/logs";
+        if (!FileUtil::mkdir(logPath))
+        {
+            return "";
+        }       
+
+        std::string exeName = FileUtil::currentExeName();
+        if (exeName.empty())
+        {
+            return "";
+        }
+        return logPath + "/" + exeName + "_" + LoggerName;
+    }
+
+    bool initLogCore(const std::string& logFileName)
+    {
         try
         {
             m_consoleLogger = spdlog::stdout_logger_mt("console", false);
-            m_fileLogger = spdlog::rotating_logger_mt("file", LoggerName, MaxFileSize, MaxFiles, true);
+            m_fileLogger = spdlog::rotating_logger_mt("file", logFileName, MaxFileSize, MaxFiles, true);
             m_consoleLogger->set_level(spdlog::level::debug); 
             m_fileLogger->set_level(spdlog::level::debug); 
         }
@@ -51,7 +84,7 @@ private:
             return false;
         }
 
-        return true;
+        return true;       
     }
 
 private:
