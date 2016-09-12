@@ -4,6 +4,7 @@
 #ifdef _WIN32
 #include <Windows.h>
 #include <direct.h>
+#include <io.h>
 #else
 #include <unistd.h>
 #include <sys/types.h>
@@ -11,11 +12,9 @@
 #include <sys/sysinfo.h>
 #endif
 
-#include <io.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream>
 #include <string>
 
 #define PATH_MAX 1024      
@@ -109,8 +108,12 @@ public:
 
     static bool isExists(const std::string& path)
     {
+#ifdef _WIN32
         int ret = _access(path.c_str(), 0);
-        return ret == -1 ? false : true;
+#else
+        int ret = access(path.c_str(), F_OK);
+#endif
+        return ret == 0 ? true : false;
     }
 
     static bool mkdir(const std::string& path)
@@ -171,7 +174,7 @@ public:
         }
 
         int ret = ::remove(path.c_str());
-        return ret == -1 ? false : true;
+        return ret == 0 ? true : false;
     }
 };
 
