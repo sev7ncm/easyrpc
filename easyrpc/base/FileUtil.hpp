@@ -29,9 +29,9 @@ public:
     static std::string currentWorkPath()
     {
 #ifdef _WIN32
-		char buf[MAX_PATH];
-		GetCurrentDirectoryA(sizeof(buf), buf);  
-		return buf;
+	char buf[MAX_PATH];
+	GetCurrentDirectoryA(sizeof(buf), buf);  
+	return buf;
 #else
         char buf[PATH_MAX] = {'\0'};
         if (getcwd(buf, sizeof (buf) - 1) != nullptr)
@@ -45,21 +45,21 @@ public:
     static bool setCurrentWorkPath(const std::string& path)
     {
 #ifdef _WIN32
-		BOOL ret =  SetCurrentDirectoryA(path.c_str());  
-		return ret == TRUE ? true : false;
+	BOOL ret =  SetCurrentDirectoryA(path.c_str());  
+	return ret == TRUE ? true : false;
 #else
-		int ret = chdir(path.c_str());
-		return ret == -1 ? false : true;
+	int ret = chdir(path.c_str());
+	return ret == -1 ? false : true;
 #endif
     }
 
     static std::string currentExePath()
     {
 #ifdef _WIN32
-		char path[MAX_PATH + 1] = { '\0' };
-		::GetModuleFileNameA(NULL, path, MAX_PATH);
-		(strrchr(path, '\\'))[1] = 0;
-		return path;
+	char path[MAX_PATH + 1] = { '\0' };
+	::GetModuleFileNameA(NULL, path, MAX_PATH);
+	(strrchr(path, '\\'))[1] = 0;
+	return path;
 #else
         char buf[PATH_MAX] = {'\0'};
 
@@ -83,10 +83,10 @@ public:
     static std::string currentExeName()
     {
 #ifdef _WIN32
-		char path[MAX_PATH + 1] = { '\0' };
-		::GetModuleFileNameA(NULL, path, MAX_PATH);
-		(strrchr(path, '\\'))[1] = 0;
-		return path;
+	char path[MAX_PATH + 1] = { '\0' };
+	::GetModuleFileNameA(NULL, path, MAX_PATH);
+	(strrchr(path, '\\'))[1] = 0;
+	return path;
 #else
         char buf[PATH_MAX] = {'\0'};
 
@@ -144,13 +144,13 @@ public:
                 if (!isExists(tempPath))
                 {
 #ifdef _WIN32
-					if (_mkdir(tempPath.c_str()) != 0)
+			if (_mkdir(tempPath.c_str()) != 0)
 #else
-					if (::mkdir(tempPath.c_str(), 0755) != 0)
+			if (::mkdir(tempPath.c_str(), 0755) != 0)
 #endif
-					{
-						return false;
-					}
+			{
+				return false;
+			}
                 }
             }
         }
