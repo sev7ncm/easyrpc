@@ -14,7 +14,7 @@ A RPC framework written in Modern C++
 
     git submodule update --init --recursive
     
-下载过后包含easyrpc头文件即可使用，在编译时需要指定序列化框架，添加`ENABLE_BOOST_SERIALIZATION`宏定义来启用boost.serialization序列化框架，添加`ENABLE_MSGPACK`宏定义来启用msgpack序列化框架。
+下载过后包含easyrpc头文件即可使用，在编译时需要指定序列化框架，添加`ENABLE_BOOST_SERIALIZATION`宏定义来启用boost.serialization序列化框架，添加`ENABLE_MSGPACK`宏定义来启用msgpack序列化框架，添加`ENABLE_JSON`宏定义来启用json序列化框架。
 
 ## Tutorial
 
@@ -98,6 +98,10 @@ A RPC framework written in Modern C++
     #ifdef ENABLE_MSGPACK
         MSGPACK_DEFINE(cardId, name);
     #endif
+    
+    #ifdef ENABLE_JSON
+        META(cardId, name);
+    #endif
     };
     
     struct PersonInfoRes 
@@ -121,10 +125,20 @@ A RPC framework written in Modern C++
     #ifdef ENABLE_MSGPACK
         MSGPACK_DEFINE(cardId, name, age, national);
     #endif
+    
+    #ifdef ENABLE_JSON
+        META(cardId, name, age, national);
+    #endif
     };
     ```
     
-可以看到，[boost序列化][3]和[msgpack][4]不需要写IDL描述文件，比[protobuf][5]和[thrift][6]方便很多，更多User-define classes细节可以查看各自官网。
+可以看到，[boost序列化][3]、[msgpack][4]和[json序列化][5]不需要写IDL描述文件，比[protobuf][6]和[thrift][7]方便很多，更多User-define classes细节可以查看各自官网。
+
+## Warning
+
+* 使用boost序列化库时，客户端和服务端序列化库的版本务必统一，要么使用32位的，要么使用64位，不然不能够通信，因为boost.serialization使用std::size_t来存储字节长度，std::size_t在32位下为unsigned int，在64位下为unsigned long。
+* 不支持指针，仅支持桟对象序列化。
+* 发送、接收buf大小为8MB（protocol + body），大于8MB程序将抛出异常，用户可更改发送、接收buf大小。
 
 ## 开发平台
 
@@ -133,14 +147,10 @@ A RPC framework written in Modern C++
 
 ## 依赖性
 
-* [easypack][7]
-* [spdlog][8]
+* [easypack][8]
+* [spdlog][9]
 * boost
 * c++14
-
-## Warning
-
-* 使用boost序列化库时，客户端和服务端序列化库的版本务必统一，要么使用32位的，要么使用64位，不然不能够通信，因为boost.serialization使用std::size_t来存储字节长度，std::size_t在32位下为unsigned int，在64位下为unsigned long。
 
 ## DONE
 
@@ -149,27 +159,28 @@ A RPC framework written in Modern C++
 * worker线程池处理任务。
 * 日志记录。
 * 客户端、服务端超时处理。
-* 支持多种序列化框架（boost序列化和msgpack）。
+* 支持多种序列化框架（boost序列化、msgpack和json）。
 
 ## TODO
 
 * 增加长连接调用。
 * 增加发布/订阅模式。
-* 增加其他序列化框架和协议（json、~~msgpack~~等）。
+* 增加其他序列化框架和协议（~~json、msgpack~~等）。
 * 服务注册、发现。
 * 支持HTTP/HTTPS协议。
 
 
 ## License
-This software is licensed under the [MIT license][9]. © 2016 chxuan
+This software is licensed under the [MIT license][10]. © 2016 chxuan
 
 
   [1]: https://github.com/topcpporg/rest_rpc
   [2]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
   [3]: http://www.boost.org/
   [4]: https://github.com/msgpack/msgpack-c
-  [5]: https://github.com/google/protobuf
-  [6]: https://github.com/apache/thrift
-  [7]: https://github.com/chxuan/easypack
-  [8]: https://github.com/gabime/spdlog
-  [9]: https://github.com/chxuan/easyrpc/blob/master/LICENSE
+  [5]: https://github.com/qicosmos/Kapok
+  [6]: https://github.com/google/protobuf
+  [7]: https://github.com/apache/thrift
+  [8]: https://github.com/chxuan/easypack
+  [9]: https://github.com/gabime/spdlog
+  [10]: https://github.com/chxuan/easyrpc/blob/master/LICENSE
