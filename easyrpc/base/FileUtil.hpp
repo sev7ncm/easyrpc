@@ -87,7 +87,7 @@ public:
         char buf[MAX_PATH + 1] = {'\0'};
         ::GetModuleFileNameA(NULL, buf, MAX_PATH);
         std::string path(buf);
-        int pos = path.find_last_of("/");
+        int pos = path.find_last_of("\\");
         if (pos == -1)
         {
             return "";
