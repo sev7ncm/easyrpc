@@ -124,7 +124,7 @@ private:
         unsigned int bodyLen = static_cast<unsigned int>(body.size());
         if (protocolLen + bodyLen > MaxBufferLenght)
         {
-            throw std::runtime_error("Send data too large");
+            throw std::runtime_error("Send data is too big");
         }
 
         const auto& buffer = getBuffer(RequestHeader{ protocolLen, bodyLen }, protocol, body);
@@ -176,7 +176,7 @@ private:
         memcpy(&m_resHead, m_head, sizeof(m_head));
         if (m_resHead.bodyLen > MaxBufferLenght)
         {
-            throw std::runtime_error("Body len is to big");
+            throw std::runtime_error("Body len is too big");
         }
     }
 
