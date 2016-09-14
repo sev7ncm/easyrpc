@@ -30,6 +30,10 @@
 #include <msgpack.hpp>
 #endif
 
+#ifdef ENABLE_JSON
+#include <kapok/Kapok.hpp>
+#endif
+
 struct PersonInfoReq
 {
     int cardId;
@@ -46,6 +50,10 @@ struct PersonInfoReq
 
 #ifdef ENABLE_MSGPACK
     MSGPACK_DEFINE(cardId, name);
+#endif
+
+#ifdef ENABLE_JSON
+    META(cardId, name);
 #endif
 };
 
@@ -69,6 +77,10 @@ struct PersonInfoRes
     
 #ifdef ENABLE_MSGPACK
     MSGPACK_DEFINE(cardId, name, age, national);
+#endif
+
+#ifdef ENABLE_JSON
+    META(cardId, name, age, national);
 #endif
 };
 

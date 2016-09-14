@@ -84,10 +84,22 @@ public:
     static std::string currentExeName()
     {
 #ifdef _WIN32
-        char path[MAX_PATH + 1] = { '\0' };
-        ::GetModuleFileNameA(NULL, path, MAX_PATH);
-        (strrchr(path, '\\'))[1] = 0;
-        return path;
+        char buf[MAX_PATH + 1] = {'\0'};
+        ::GetModuleFileNameA(NULL, buf, MAX_PATH);
+        std::string path(buf);
+        int pos = path.find_last_of("/");
+        if (pos == -1)
+        {
+            return "";
+        }
+
+        path = path.substr(pos + 1, path.size() - 1);
+        pos = path.find_first_of(".");
+        if (pos == -1)
+        {
+            return "";
+        }
+        return path.substr(0, pos);
 #else
         char buf[PATH_MAX] = {'\0'};
 

@@ -56,7 +56,16 @@ private:
             return "";
         }
 
-        std::string logPath = exePath + "/logs";
+        std::string logPath;
+        if (exePath[exePath.size() - 1] == '/' || exePath[exePath.size() - 1] == '\\')
+        {
+            logPath = exePath + "logs";
+        }
+        else
+        {
+            logPath = exePath = "/logs";
+        }
+
         if (!FileUtil::mkdir(logPath))
         {
             return "";
@@ -118,7 +127,11 @@ public:
 private:
     std::string makeContent(const std::string& fmt)
     {
+#ifdef _WIN32
+        int pos = m_filePath.find_last_of("\\");
+#else
         int pos = m_filePath.find_last_of("/");
+#endif
         std::string content = m_filePath.substr(pos + 1) + " " + m_funcName + "(" + std::to_string(m_line) + ") " + fmt;
         return content;
     }

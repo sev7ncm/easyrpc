@@ -102,6 +102,8 @@ flags = [
 '-isystem',
 './easypack/msgpack',
 '-isystem',
+'./easypack/kapok',
+'-isystem',
 './test',
 '-isystem',
 './test/server',
