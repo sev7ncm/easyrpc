@@ -1,6 +1,7 @@
 #ifndef _LOGGER_H
 #define _LOGGER_H
 
+#include <iostream>
 #include <spdlog/spdlog.h>
 #include "FileUtil.hpp"
 
@@ -63,7 +64,7 @@ private:
         }
         else
         {
-            logPath = exePath = "/logs";
+            logPath = exePath + "/logs";
         }
 
         if (!FileUtil::mkdir(logPath))
